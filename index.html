@@ -546,7 +546,7 @@ footer {
     <label class="form-label">Get notified when tickets go on sale</label>
     <div class="form-row">
       <input type="email" id="emailInput" placeholder="your@email.com" />
-      <button onclick="handleSubmit()">Notify Me</button>
+      <button onclick="handleSubmit(event); return false;">Notify Me</button>
     </div>
     <p class="form-note">No spam. One email when tickets open.</p>
     <div class="success-msg" id="successMsg">
@@ -665,7 +665,7 @@ footer {
     <label class="form-label" style="text-align:center;display:block;">Get notified when tickets go on sale</label>
     <div class="form-row">
       <input type="email" id="emailInput2" placeholder="your@email.com" />
-      <button onclick="handleSubmit2()">Notify Me</button>
+      <button onclick="handleSubmit2(event); return false;">Notify Me</button>
     </div>
     <p class="form-note">No spam. One email when tickets open.</p>
     <div class="success-msg" id="successMsg2">✓ You're on the list. See you in St. Croix.</div>
@@ -678,30 +678,32 @@ footer {
   <div class="footer-sub">St. Croix, USVI  ·  Est. 2026  ·  July 16–17, 2027</div>
   <div class="footer-links">
     <a href="mailto:info@cruzanrumfest.com">info@cruzanrumfest.com</a>
-    <a href="#">Sponsorship</a>
-    <a href="#">Exhibitor Info</a>
-    <a href="#">Press</a>
+    <a href="javascript:void(0)">Sponsorship</a>
+    <a href="javascript:void(0)">Exhibitor Info</a>
+    <a href="javascript:void(0)">Press</a>
   </div>
   <div class="footer-copy">© 2026 Cruzan Rum Fest. All rights reserved. Caribbean's First Destination Rum Festival.</div>
 </footer>
 
 <script>
-function handleSubmit() {
+function handleSubmit(e) {
+  if (e) e.preventDefault();
   const input = document.getElementById('emailInput');
   const msg = document.getElementById('successMsg');
   const row = input.closest('.form-row');
   if (input.value && input.value.includes('@')) {
     row.style.display = 'none';
     msg.style.display = 'block';
-    // In production: send to your email capture service
     console.log('Email captured:', input.value);
   } else {
     input.style.borderColor = '#C0392B';
     setTimeout(() => input.style.borderColor = '', 1500);
   }
+  return false;
 }
 
-function handleSubmit2() {
+function handleSubmit2(e) {
+  if (e) e.preventDefault();
   const input = document.getElementById('emailInput2');
   const msg = document.getElementById('successMsg2');
   const row = input.closest('.form-row');
@@ -713,14 +715,15 @@ function handleSubmit2() {
     input.style.borderColor = '#C0392B';
     setTimeout(() => input.style.borderColor = '', 1500);
   }
+  return false;
 }
 
 // Enter key support
 document.getElementById('emailInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') handleSubmit();
+  if (e.key === 'Enter') { e.preventDefault(); handleSubmit(); }
 });
 document.getElementById('emailInput2').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') handleSubmit2();
+  if (e.key === 'Enter') { e.preventDefault(); handleSubmit2(); }
 });
 </script>
 
